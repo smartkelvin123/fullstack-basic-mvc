@@ -1,25 +1,29 @@
+//todo - Declare Variables
 const express = require("express");
-
 const app = express();
-
 const PORT = 5000;
-const moogoose = require("mongoose");
+const mongoose = require("mongoose");
 
+//*Import functions/routes
 const connectDB = require("./config/database");
 const homeRoutes = require("./routes/home");
+const editRoutes = require("./routes/edit");
 
 require("dotenv").config({ path: "./config/.env" });
-// connect to detabase
+
+//todo - Connect to Database
 connectDB();
 
-// set middleware
-
+//todo - Set Middleware
 app.set("view engine", "ejs");
-app.set(express.static("public"));
+app.use(express.static("public"));
+
+//*Required to properly parse form POST requests - sending data
 app.use(express.urlencoded({ extended: true }));
 
-// set routes
+//todo - Set Routes
 app.use("/", homeRoutes);
+app.use("/edit", editRoutes);
 
-// start Server
-app.listen(PORT, () => console.log(`server listening port ${PORT}`));
+//todo - Start Server
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
